@@ -19,7 +19,7 @@ def installer():
 
 class PackageTests(unittest.TestCase):
     def test_required_files_and_attribution(self):
-        for file in ["plugin.yaml", "__init__.py", "desktop/plugin.js", "tui/lot-map.mjs", "LICENSE", "LICENSE.upstream", "NOTICE.md", "README.md"]:
+        for file in ["plugin.yaml", "__init__.py", "desktop/plugin.js", "tui/lot-map.mjs", "LICENSE", "LICENSE.upstream", "NOTICE.md", "README.md", "src/quota.js", "src/insights.js", "tests/quota.mjs", "tests/insights.mjs", "src/themes.js", "src/settings.js", "src/motion.js", "src/tui-layout.mjs", "scripts/status.py"]:
             self.assertTrue((ROOT / file).is_file(), file)
         self.assertIn("Aleksei Volodin", (ROOT / "LICENSE.upstream").read_text())
         self.assertIn("5c5833d7380976fda671975d32fcec9c1bc3ef79", (ROOT / "NOTICE.md").read_text())

@@ -1,5 +1,5 @@
 name: lot-map
-version: "0.1.0"
+version: "0.2.0"
 description: Original Lot Map activity visualization adapted for Hermes Desktop and TUI
 requires_hermes: ">=0.23.3"
 provides_hooks:

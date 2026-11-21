@@ -8,7 +8,8 @@ def assemble(adapter, renderer, target):
     lines = source.splitlines()
     imports = [line for line in lines if line.startswith("import ")]
     body = "\n".join(line for line in lines if not line.startswith("import "))
-    content = "\n".join(imports) + "\n\n" + HEADER + (ROOT / renderer).read_text(encoding="utf-8") + "\n" + body + "\n"
+    helpers = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in ("src/quota.js", "src/insights.js", "src/provider.js", "src/themes.js", "src/settings.js", "src/motion.js")) if target.startswith("desktop/") else "\n".join((ROOT / name).read_text(encoding="utf-8") for name in ("src/themes.js", "src/tui-layout.mjs"))
+    content = "\n".join(imports) + "\n\n" + HEADER + (ROOT / renderer).read_text(encoding="utf-8") + "\n" + helpers + "\n" + body + "\n"
     output = ROOT / target
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(content, encoding="utf-8", newline="\n")

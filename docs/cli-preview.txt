@@ -1,0 +1,11 @@
+SYNTHETIC DEMONSTRATION — NOT A LIVE SESSION
+
+LOT MAP | local metadata snapshot
+Completed 2 | Failed 1 | Unmatched 0
+Quota: unavailable (not inferred from tool calls)
+STATUS               TOOL                              TIME
+ok                   read_file                             0.3s
+error                terminal                              1.3s
+
+JSON:
+{"quota": null, "quota_status": "unavailable", "completed": 2, "failed": 1, "unmatched": 0, "rows": [{"tool": "read_file", "status": "ok", "elapsed_ms": 300}, {"tool": "terminal", "status": "error", "elapsed_ms": 1300}]}

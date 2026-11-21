@@ -1,0 +1,11 @@
+const DEFAULT_SETTINGS = {version:1,showMap:true,showQuota:true,showStatus:true,showHeaderTitle:true,showLiveStatus:true,showExpandButton:true,showInputTokens:true,showOutputTokens:true,showCost:true,showContext:true,showToolStats:true,showSlowTools:true,showClearButton:true,showActivityHeading:true,showActivityFilters:true,showActivityIcons:true,showActivityStation:true,showActivityDuration:true,showQuotaBar:true,showQuotaReset:true,showQuotaCountdown:true,showQuotaIcons:true,fontSize:12,mapWidth:560,activityRows:20,cornerRadius:7,fontFamily:'mono',themeMode:'auto',palette:'obsidian',providerThemes:{},motion:'auto',density:'compact',showUsage:true,showActivity:true,quotaCacheEnabled:false,quotaWarn:80,quotaCritical:95}
+function normalizeSettings(raw={}) {
+ const s={...DEFAULT_SETTINGS,providerThemes:{}};if(!raw||typeof raw!=='object')return s
+ for(const [k,values] of Object.entries({themeMode:['auto','manual'],palette:THEME_NAMES,motion:['auto','reduced','off'],density:['compact','comfortable'],fontFamily:['mono','system']}))if(values.includes(raw[k]))s[k]=raw[k]
+ for(const k of Object.keys(DEFAULT_SETTINGS).filter(k=>typeof DEFAULT_SETTINGS[k]==='boolean'))if(typeof raw[k]==='boolean')s[k]=raw[k]
+ for(const [key,min,max] of [['fontSize',10,18],['mapWidth',240,900],['activityRows',3,80],['cornerRadius',0,20]])if(typeof raw[key]==='number'&&Number.isFinite(raw[key]))s[key]=Math.round(Math.max(min,Math.min(max,raw[key])))
+ const t=quotaThresholds(raw.quotaWarn,raw.quotaCritical);s.quotaWarn=t.warn;s.quotaCritical=t.critical
+ for(const [key,value] of Object.entries(raw.providerThemes||{}).slice(0,40))if(!['__proto__','constructor','prototype'].includes(key)&&/^[a-z0-9:_-]{1,60}$/.test(key)&&THEME_NAMES.includes(value))s.providerThemes[key]=value
+ return s
+}
+function loadMapSettings(store) {const v=store?.get('settings',null);if(v&&v.version!==undefined&&v.version!==1)return normalizeSettings();if(v)return normalizeSettings(v);const old=store?.get('theme',null);return normalizeSettings({...(old==='dark'||old==='light'?{themeMode:'manual',palette:old==='light'?'paper':'obsidian'}:{}),quotaCacheEnabled:store?.get('quotaCacheEnabled',false),quotaWarn:store?.get('quotaWarn',80),quotaCritical:store?.get('quotaCritical',95)})}
