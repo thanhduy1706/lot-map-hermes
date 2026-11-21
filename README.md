@@ -25,7 +25,7 @@ Open **Settings** to control individual sections and elements. The Settings butt
 - Header: title, live badge, expand/back button.
 - Insights: input/output tokens, estimated cost, context, tool counters, slow tools, clear-observations action.
 - Feed: heading/count, search/filters, status icons, station column, duration/state column, and visible row limit (3–80).
-- Quota: remaining bar, icons, reset clock and countdown independently. Hiding quota unmounts its component and stops its queries.
+- Quota: remaining bar, icons, reset clock and countdown independently. When cache integration is enabled, **Settings → Quota providers** lets you show/hide cached provider entries individually, with Show all / Hide all. The same selection applies to the summary and cards; hidden providers remain collected by the separate quota plugin. Choose **Show providers → custom** to use an explicit selection: only checked providers appear, and new providers stay hidden. **all** preserves the overview. Hiding quota unmounts its component and stops its queries.
 - Appearance: 8 palettes, provider mappings, motion, compact/comfortable density, monospace/system fonts, text size (10–18px), map width (240–900px), corner radius (0–20px).
 - Quick layout presets: **Minimal**, **Balanced**, **Focus**. These only change section visibility; they do not change quota data permissions or your theme. Reset returns to safe defaults, including quota-cache opt-out.
 
@@ -90,6 +90,7 @@ node tests/smoke.mjs
 node tests/quota.mjs
 node tests/quota-reset.mjs
 node tests/quota-glance.mjs
+node tests/quota-providers.mjs
 node tests/customize.mjs
 node tests/quota-view.mjs
 node tests/insights.mjs

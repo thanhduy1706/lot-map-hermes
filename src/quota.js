@@ -27,6 +27,14 @@ function parseQuotaOutput(output) {
   }
   throw new Error('Quota cache response unavailable')
 }
+function quotaProviderOptions(data) {
+ return Object.entries(data?.providers||{}).slice(0,100).map(([id,p])=>({id,label:typeof p?.label==='string'?p.label.slice(0,120):id}))
+}
+function filterQuotaProviders(data, hidden=[], shown=null) {
+ if(!data||typeof data!=='object')return data
+ const excluded=new Set(hidden)
+ return {...data,providers:Object.fromEntries(Object.entries(data.providers||{}).filter(([id])=>Array.isArray(shown)?shown.includes(id):!excluded.has(id)))}
+}
 function structuredQuota(data, now = Date.now(), thresholds = quotaThresholds()) {
   const fetched = Date.parse(data?.fetched_at)
   const stale = !Number.isFinite(fetched) || now - fetched > 30 * 60_000 || fetched > now + 60_000
